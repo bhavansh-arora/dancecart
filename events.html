@@ -99,14 +99,27 @@
     </defs>
   </svg>
 
-  <div class="preloader" aria-hidden="true">
-    <div class="preloader__top"><span class="label">Dance Cart</span><span class="label">Est. 2007 &middot; Australia-wide</span></div>
+  <div class="preloader" aria-hidden="true" title="Click to skip">
+    <div class="preloader__layer preloader__layer--1"></div>
+    <div class="preloader__layer preloader__layer--2"></div>
+    <div class="preloader__layer preloader__layer--3"></div>
+
+    <div class="preloader__top">
+      <span class="label">Dance Cart &middot; Est. 2007</span>
+      <span class="label preloader__hint">The count-in every dance class starts with</span>
+    </div>
+
     <div class="preloader__count">
       <span class="preloader__num">5</span><span class="preloader__num">6</span><span class="preloader__num">7</span><span class="preloader__num">8</span>
+      <div class="preloader__go">
+        <img src="assets/img/dc-mark.png" alt="" width="140" height="140">
+        <span>Let&rsquo;s <em>dance!</em></span>
+      </div>
     </div>
+
     <div class="preloader__bottom">
-      <span class="eq"><i></i><i></i><i></i><i></i><i></i></span>
-      <span class="label">Counting you in</span>
+      <span class="preloader__beats"><i></i><i></i><i></i><i></i></span>
+      <span class="label preloader__words"><b>Five</b> <b>six</b> <b>seven</b> <b>eight</b></span>
     </div>
   </div>
 
@@ -312,7 +325,7 @@
           <span>seven, eight.</span>
         </h2>
         <div class="footer-cta__row">
-          <p class="footer-cta__lead">Pick a program, enrol in minutes and pay by card, invoice or purchase order. Your students will be dancing before the bell.</p>
+          <p class="footer-cta__lead"><span class="footer-cta__aside">Every dance class starts with a count-in.</span> Pick a program, enrol in minutes and pay by card, invoice or purchase order. Your students will be dancing before the bell.</p>
           <div class="footer-cta__btns">
             <a class="btn btn--primary btn--lg" href="enrol.html" data-magnetic><span class="btn__text" data-text="Enrol your school">Enrol your school</span><span class="btn__icon"><svg class="i"><use href="#i-arrow"/></svg></span></a>
             <a class="btn btn--ghost-light btn--lg" href="contact.html"><span class="btn__text" data-text="Talk to Amy">Talk to Amy</span></a>

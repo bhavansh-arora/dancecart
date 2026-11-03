@@ -39,11 +39,16 @@
     var curtain = $('.curtain');
     if (root.classList.contains('is-loading')) {
       var pre = $('.preloader');
-      setTimeout(function () {
+      var finished = false;
+      var finish = function () {
+        if (finished) return;
+        finished = true;
         pre.classList.add('is-done');
         setTimeout(fireReady, 350);
         setTimeout(function () { root.classList.remove('is-loading'); }, 1050);
-      }, 1850);
+      };
+      var timer = setTimeout(finish, 2650);
+      pre.addEventListener('click', function () { clearTimeout(timer); finish(); });
       session.set('dc-seen', '1');
     } else if (root.classList.contains('is-entering')) {
       session.del('dc-nav');
@@ -84,6 +89,16 @@
   /* ---------- Marquees: double each track so it always fills wide screens ---------- */
   $$('.marquee__track').forEach(function (t) { t.innerHTML += t.innerHTML; });
 
+  /* ---------- Footer word: one span per letter for the wave ---------- */
+  $$('.footer__word').forEach(function (el) {
+    var text = el.textContent.trim();
+    el.setAttribute('aria-label', text);
+    el.innerHTML = text.split('').map(function (c, i) {
+      return c === ' ' ? '<span class="ch ch--space" style="--i:' + i + '"></span>' : '<span class="ch" style="--i:' + i + '" aria-hidden="true">' + c + '</span>';
+    }).join('');
+    el.setAttribute('data-reveal-word', '');
+  });
+
   /* ---------- Split text ---------- */
   $$('[data-split]').forEach(function (el) {
     $$(':scope > span', el).forEach(function (line, i) {
@@ -93,7 +108,7 @@
   });
 
   /* ---------- Reveal on scroll ---------- */
-  var revealSel = '[data-reveal], [data-split], [data-clip], .fix, .steps, [data-count]';
+  var revealSel = '[data-reveal], [data-split], [data-clip], .fix, .steps, [data-count], [data-reveal-word]';
   var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
     entries.forEach(function (en) {
       if (!en.isIntersecting) return;
