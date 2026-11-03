@@ -157,6 +157,7 @@
     if (header && !root.classList.contains('is-menu-open')) {
       header.classList.toggle('is-hidden', y > 240 && y > lastY + 2);
       if (y < lastY - 2) header.classList.remove('is-hidden');
+      root.classList.toggle('header-off', header.classList.contains('is-hidden'));
     }
     lastY = y;
     parallax();
@@ -473,7 +474,7 @@
       var p = DC.byId(id);
       if (Cart.has(id)) { openDrawer(); return; }
       if (Cart.add(id)) {
-        if (header) header.classList.remove('is-hidden');
+        if (header) { header.classList.remove('is-hidden'); root.classList.remove('header-off'); }
         $$('.cart-btn').forEach(function (b) { b.classList.remove('is-bump'); void b.offsetWidth; b.classList.add('is-bump'); });
         toast((p.price === null ? 'Quote request added: ' : 'Added: ') + p.name + ' · ' + p.variant, 'View cart');
       }
@@ -570,7 +571,7 @@
     var DUR = 7000;
 
     stage.innerHTML = list.map(function (q, i) {
-      var words = (q.quote + (q.more ? ' ' + q.more : '')).split(' ').map(function (w, n) { return '<span class="w" style="--w:' + n + '">' + esc(w) + '</span>'; }).join(' ');
+      var words = q.quote.split(' ').map(function (w, n) { return '<span class="w" style="--w:' + n + '">' + esc(w) + '</span>'; }).join(' ');
       var logo = q.logo ? '<span class="quote__logo"><img src="' + q.logo + '" alt="" loading="lazy"></span>' : '<span class="quote__logo quote__logo--initial">' + esc(q.school.charAt(0)) + '</span>';
       return '<figure class="quote" data-i="' + i + '"><span class="quote__mark" aria-hidden="true">&ldquo;</span>' +
         '<blockquote class="quote__text">' + words + '</blockquote>' +
@@ -582,12 +583,16 @@
       cur = (i + list.length) % list.length;
       items.forEach(function (it, n) { it.classList.toggle('is-active', n === cur); it.classList.remove('is-shown'); });
       requestAnimationFrame(function () { requestAnimationFrame(function () { items[cur].classList.add('is-shown'); }); });
+      fit();
       count.textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(list.length).padStart(2, '0');
       bar.classList.remove('is-running'); void bar.offsetWidth;
       if (!reduced) { bar.style.setProperty('--dur', DUR + 'ms'); bar.classList.add('is-running'); }
       clearTimeout(timer);
       if (!reduced) timer = setTimeout(function () { go(cur + 1); }, DUR);
     }
+    // Size the stage to the quote on show, so short quotes don't leave a gap
+    function fit() { stage.style.height = items[cur].offsetHeight + 'px'; }
+    window.addEventListener('resize', fit);
     $('[data-quotes-prev]', wrap).addEventListener('click', function () { go(cur - 1); });
     $('[data-quotes-next]', wrap).addEventListener('click', function () { go(cur + 1); });
     var started = false;
