@@ -1436,3 +1436,59 @@ html.js .footer-cta__title > span, html.js .hero__title > span { padding-bottom:
 }
 .tile p.tile__big { padding-bottom: 0.18em; margin-bottom: -0.18em; }
 html.js [data-split] > span.is-settled { overflow: visible; }
+
+/* Sections that sit straight under a page header */
+.section--after-hero { padding-top: clamp(48px, 7vw, 112px); }
+.cat-callout { margin-top: clamp(56px, 7vw, 96px); }
+
+/* Phones: remove empty stretches (sections, cards, callouts, footer) */
+@media (max-width: 640px) {
+  :root { --section: 52px; }
+  .section--after-hero { padding-top: 32px; }
+  .page-hero { padding-bottom: 44px; }
+  .sec-head { margin-bottom: 28px; }
+  .sec-head__aside { gap: 16px; }
+  .fixes__intro p, .faq__intro p { margin-top: 16px; }
+  .faq__intro .btn { margin-top: 20px; }
+  .fixes__list { margin-top: 8px; }
+  .fix { padding: 24px; }
+  .fix__a { margin-top: 20px; padding-top: 18px; }
+  /* program cards: content-height instead of tall empty panels */
+  .bento__card--a, .bento__card--b { min-height: 400px; }
+  .bento__card--c, .bento__card--d { min-height: 0; padding-top: 104px; }
+  .bento__card--d .bento__art { font-size: 7rem; top: 46px; transform: none; }
+  .bento__card--c .bento__art { width: 46%; top: 4%; right: -6%; }
+  .bento__meta { margin-top: 18px; }
+  .cat-callout { margin-top: 36px; }
+  .callout { gap: 16px; padding: 24px; }
+  .callout__icon { width: 52px; height: 52px; border-radius: 16px; }
+  .callout__icon .i { width: 24px; height: 24px; }
+  .ev__media--grad { aspect-ratio: 16 / 7; }
+  .ev__body { padding: 22px; }
+  .step { padding-top: 24px; }
+  .steps { row-gap: 32px; }
+  .spot__body, .split__body, .meet__body { margin-top: 8px; }
+  .spot__ctas { margin-top: 28px; }
+  .ticks { margin-top: 24px; }
+  .meet__facts { margin-top: 28px; }
+  .meet__sig { margin-top: 20px; }
+  .value { min-height: 0; gap: 20px; }
+  .value__title { margin-top: 0; }
+  .flow__icon { margin-top: 18px; }
+  .flow__title { padding-top: 18px; }
+  .tl { padding: 22px 0; }
+  .quotes__aside { gap: 20px; }
+  .logos { margin-top: 36px; }
+  .contact__aside { gap: 12px; }
+  .ccard { padding: 22px; }
+  .booker__pick { margin-top: 24px; }
+  .pricing__opts { gap: 8px; }
+  .footer-cta__row { margin-top: 28px; }
+  .footer__main { padding-top: 44px; }
+  .footer__grid { gap: 32px 24px; }
+  .footer__ack { margin-top: 32px; padding-top: 20px; }
+  .footer__word { margin-top: 24px; }
+  .bento { gap: 12px; }
+  .cat-grid { gap: 14px; }
+  .done { padding: 32px 20px; }
+}
