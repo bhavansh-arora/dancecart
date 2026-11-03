@@ -44,11 +44,11 @@
         if (finished) return;
         finished = true;
         pre.classList.add('is-done');
-        setTimeout(fireReady, 350);
+        setTimeout(fireReady, 450);
         setTimeout(function () { root.classList.remove('is-loading'); }, 1050);
       };
       var timer = setTimeout(finish, 2650);
-      pre.addEventListener('click', function () { clearTimeout(timer); finish(); });
+      pre.addEventListener('click', function () { clearTimeout(timer); pre.classList.add('is-skip'); finish(); });
       session.set('dc-seen', '1');
     } else if (root.classList.contains('is-entering')) {
       session.del('dc-nav');
