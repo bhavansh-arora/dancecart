@@ -119,6 +119,7 @@
 
   function reveal(el) {
     el.classList.add('is-in');
+    if (el.hasAttribute('data-split')) settleLines(el);
     if (el.hasAttribute('data-count')) countUp(el);
   }
 
@@ -128,6 +129,19 @@
       var inHero = el.closest('.hero, .page-hero');
       if (inHero) { onReady(function () { reveal(el); }); return; }
       io ? io.observe(el) : reveal(el);
+    });
+  }
+
+  /* Once a headline line has slid into place, drop its mask so no browser can clip a letter */
+  function settleLines(el) {
+    $$(':scope > span', el).forEach(function (line) {
+      var inner = line.firstElementChild;
+      var done = function () { line.classList.add('is-settled'); };
+      if (reduced || !inner) { done(); return; }
+      inner.addEventListener('transitionend', function (e) { if (e.propertyName === 'transform') done(); }, { once: true });
+      var cs = getComputedStyle(inner);
+      var wait = (parseFloat(cs.transitionDuration) + parseFloat(cs.transitionDelay)) * 1000 + 200;
+      setTimeout(done, wait || 1600); // safety net if transitionend never fires
     });
   }
 

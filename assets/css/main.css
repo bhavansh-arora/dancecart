@@ -1435,3 +1435,4 @@ html.js .footer-cta__title > span, html.js .hero__title > span { padding-bottom:
   -webkit-box-decoration-break: clone; box-decoration-break: clone;
 }
 .tile p.tile__big { padding-bottom: 0.18em; margin-bottom: -0.18em; }
+html.js [data-split] > span.is-settled { overflow: visible; }
