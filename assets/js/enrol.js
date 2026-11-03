@@ -224,7 +224,7 @@
 
     var btn = UI.$('[data-submit]');
     btn.classList.add('is-disabled');
-    UI.$('.btn__text', btn).textContent = 'Processing…';
+    var pt = UI.$('.btn__text', btn); pt.textContent = 'Processing…'; pt.setAttribute('data-text', 'Processing…');
     setTimeout(function () { done(record); }, 1100);
   });
 
