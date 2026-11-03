@@ -211,7 +211,7 @@ html.is-loading .preloader__top, html.is-loading .preloader__bottom { animation:
 .preloader__count { position: relative; display: grid; place-items: center; }
 .preloader__num {
   grid-area: 1 / 1; font-family: var(--f-display); font-weight: 800; font-stretch: 75%;
-  font-size: clamp(11rem, 40vw, 32rem); line-height: 0.8; letter-spacing: -0.04em; opacity: 0;
+  font-size: min(clamp(11rem, 40vw, 32rem), 50vh); line-height: 0.8; letter-spacing: -0.04em; opacity: 0;
 }
 .preloader__num:nth-child(1) { color: var(--pink-hot); --n: 0; }
 .preloader__num:nth-child(2) { color: var(--ink); --n: 1; }
@@ -219,7 +219,7 @@ html.is-loading .preloader__top, html.is-loading .preloader__bottom { animation:
 .preloader__num:nth-child(4) { color: var(--ink); --n: 3; }
 html.is-loading .preloader__num { animation: pl-beat calc(var(--b) + 0.1s) var(--ease) both; animation-delay: calc(var(--s) + var(--b) * var(--n)); }
 @keyframes pl-beat {
-  0% { opacity: 0; transform: scale(1.6) rotate(-8deg); }
+  0% { opacity: 0; transform: scale(1.3) rotate(-6deg); }
   22% { opacity: 1; transform: scale(0.94) rotate(1deg); }
   40% { transform: scale(1.03) rotate(0); }
   78% { opacity: 1; transform: scale(1); }
@@ -227,8 +227,8 @@ html.is-loading .preloader__num { animation: pl-beat calc(var(--b) + 0.1s) var(-
 }
 
 .preloader__go { grid-area: 1 / 1; display: flex; flex-direction: column; align-items: center; gap: clamp(16px, 2vw, 28px); color: var(--ink); }
-.preloader__go img { width: clamp(96px, 11vw, 150px); height: auto; opacity: 0; transform: scale(0) rotate(-200deg); }
-.preloader__go span { font-family: var(--f-display); font-weight: 800; font-stretch: 76%; font-size: clamp(3rem, 9vw, 8rem); line-height: 0.9; letter-spacing: -0.03em; text-transform: uppercase; opacity: 0; transform: translateY(40%); }
+.preloader__go img { width: min(clamp(96px, 11vw, 150px), 20vh); height: auto; opacity: 0; transform: scale(0) rotate(-200deg); }
+.preloader__go span { font-family: var(--f-display); font-weight: 800; font-stretch: 76%; font-size: min(clamp(3rem, 9vw, 8rem), 13vh); line-height: 0.9; letter-spacing: -0.03em; text-transform: uppercase; opacity: 0; transform: translateY(40%); }
 .preloader__go em { font-family: var(--f-serif); font-style: italic; font-weight: 400; text-transform: none; color: var(--pink); letter-spacing: -0.02em; }
 html.is-loading .preloader__go img { animation: pl-stamp 0.7s var(--ease-back) both; animation-delay: calc(var(--s) + var(--b) * 4); }
 html.is-loading .preloader__go span { animation: pl-rise 0.6s var(--ease) both; animation-delay: calc(var(--s) + var(--b) * 4 + 0.12s); }
@@ -1426,3 +1426,12 @@ html.js .footer-cta__title > span, html.js .hero__title > span { padding-bottom:
   .drawer__panel { top: calc(8px + env(safe-area-inset-top, 0px)); bottom: calc(8px + env(safe-area-inset-bottom, 0px)); }
   .preloader__hint { font-size: 10px; letter-spacing: 0.1em; max-width: 30ch; line-height: 1.5; }
 }
+
+/* Gradient text is painted only inside the element's background box. Safari ends that box above
+   italic descenders (the g in "moving."), so the tails lost their colour and looked cut off.
+   Extra padding (cancelled out by negative margins) gives the gradient room on every side. */
+.grad-text, .hero__title em, .page-hero__title em {
+  padding: 0.08em 0.12em 0.24em 0.06em; margin: -0.08em -0.12em -0.24em -0.06em;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.tile p.tile__big { padding-bottom: 0.18em; margin-bottom: -0.18em; }
