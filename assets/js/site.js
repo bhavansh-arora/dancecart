@@ -281,13 +281,31 @@
   };
   var BIG = { 'of-prep': 'Prep', 'of-y12': '1–2', 'of-y34': '3–4', 'of-y56': '5–6', 'of-all': 'P–6', 'free-resources': 'Free' };
 
+  // Poster-style art for programs without a photo: band label, format icon, key facts, logo sticker
+  var POSTER = {
+    'of-prep': { pre: 'Band', big: 'Prep', icon: 'video', facts: ['10 lessons', '12 months'] },
+    'of-y12': { pre: 'Year', big: '1–2', icon: 'video', facts: ['10 lessons', '12 months'] },
+    'of-y34': { pre: 'Year', big: '3–4', icon: 'video', facts: ['10 lessons', '12 months'] },
+    'of-y56': { pre: 'Year', big: '5–6', icon: 'video', facts: ['10 lessons', '12 months'] },
+    'of-all': { pre: 'Every band', big: 'P–6', icon: 'users', facts: ['All units', '12 months'] },
+    'free-resources': { pre: 'For teachers', big: 'Free', icon: 'download', facts: ['Activities', 'Tips'] }
+  };
+
   function artHTML(p, extraClass) {
     var cls = 'pcard__art pcard__art--' + p.art + (extraClass ? ' ' + extraClass : '');
-    var inner = '';
-    if (PHOTOS[p.art]) inner = '<img src="' + PHOTOS[p.art] + '" alt="" loading="lazy" decoding="async">';
-    else inner = '<svg class="pcard__star" aria-hidden="true"><use href="#i-star"/></svg><span class="pcard__big" aria-hidden="true">' + esc(BIG[p.id] || p.variant) + '</span>';
     var tags = p.tag ? '<span class="pcard__tags"><span class="chip chip--sun">' + icon('spark') + esc(p.tag) + '</span></span>' : '';
-    return '<div class="' + cls + '">' + inner + tags + '<span class="chip chip--glass">' + esc(p.duration) + '</span></div>';
+    if (PHOTOS[p.art]) {
+      return '<div class="' + cls + '"><img src="' + PHOTOS[p.art] + '" alt="" loading="lazy" decoding="async">' + tags + '<span class="chip chip--glass">' + esc(p.duration) + '</span></div>';
+    }
+    var d = POSTER[p.id] || { pre: p.modeLabel, big: p.variant, icon: 'star', facts: [p.duration] };
+    return '<div class="' + cls + ' pcard__art--poster">' +
+      '<span class="poster__rings" aria-hidden="true"></span><span class="poster__dots" aria-hidden="true"></span>' +
+      '<span class="poster__top"><span class="poster__icon">' + icon(d.icon) + '</span>' +
+        d.facts.map(function (f) { return '<span class="poster__fact">' + esc(f) + '</span>'; }).join('') + '</span>' +
+      tags +
+      '<span class="poster__label" aria-hidden="true"><em>' + esc(d.pre) + '</em><b>' + esc(d.big) + '</b></span>' +
+      '<img class="poster__sticker" src="assets/img/dc-mark.png" alt="" width="72" height="72">' +
+    '</div>';
   }
 
   function priceHTML(p) {
