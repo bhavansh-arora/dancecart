@@ -3,6 +3,7 @@
 // Run with: node build.mjs
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const root = dirname(fileURLToPath(import.meta.url));
@@ -11,6 +12,13 @@ const partial = (name) => readFileSync(join(src, 'partials', `${name}.html`), 'u
 const layout = partial('layout');
 
 const SITE_URL = 'https://www.dancecart.com.au';
+
+// Cache busting: stamp CSS/JS links with a hash of the file, so browsers fetch
+// the new file as soon as it changes instead of using a saved old copy.
+const versioned = (html) => html.replace(/(assets\/(?:css|js)\/[\w.-]+\.(?:css|js))(")/g, (_, path, q) => {
+  const hash = createHash('sha1').update(readFileSync(join(root, path))).digest('hex').slice(0, 8);
+  return `${path}?v=${hash}${q}`;
+});
 
 for (const file of readdirSync(join(src, 'pages')).filter((f) => f.endsWith('.html'))) {
   const raw = readFileSync(join(src, 'pages', file), 'utf8');
@@ -58,6 +66,6 @@ for (const file of readdirSync(join(src, 'pages')).filter((f) => f.endsWith('.ht
     return vars[key] ?? '';
   });
 
-  writeFileSync(join(root, file), html);
+  writeFileSync(join(root, file), versioned(html));
   console.log(`built ${file}`);
 }

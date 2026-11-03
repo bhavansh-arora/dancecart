@@ -1367,3 +1367,4 @@ body.dash .header .nav, body.dash .header__login { display: none; }
 .nf__num { font-family: var(--f-display); font-weight: 800; font-stretch: 75%; font-size: clamp(9rem, 32vw, 26rem); line-height: 0.8; letter-spacing: -0.04em; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 @media (max-width: 640px) { .footer-cta__stars .star-b, .footer-cta__stars .star-c { display: none; } .footer-cta__stars .star-a { right: 6%; top: 6%; } }
 .footer-cta__aside { display: block; font-family: var(--f-mono); font-size: var(--fs-label); text-transform: uppercase; letter-spacing: 0.12em; color: var(--sun); margin-bottom: 14px; }
+.toast:empty { display: none; }
